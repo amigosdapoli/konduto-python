@@ -1,17 +1,27 @@
 #!/usr/bin/python
 # coding: utf-8
 import unittest
+import os
 from konduto import Konduto
 from random import randint
+# Load .env variables
+from dotenv import load_dotenv, find_dotenv
+load_dotenv(find_dotenv(), override=True)
 
-KONDUTO_ID = os.getenv('KONDUTO_ID')
-KONDUTO_API_KEY = os.getenv('KONDUTO_API_KEY')
+
+KONDUTO_PUBLIC_KEY = os.getenv('KONDUTO_PUBLIC_KEY')
+KONDUTO_PRIVATE_KEY = os.getenv('KONDUTO_PRIVATE_KEY')
 
 
 class KondutoTestCase(unittest.TestCase):
 
     def setUp(self):
-        self.konduto = konduto(KONDUTO_API_KEY, KONDUTO_API_KEY)
+        self.konduto = Konduto(KONDUTO_PUBLIC_KEY, KONDUTO_PRIVATE_KEY)
 
     def test_check_order(self):
-        pass
+        response = self.konduto.send_order()
+        self.assertEqual(response["status"],"ok")
+
+
+if __name__ == '__main__':
+    unittest.main()
