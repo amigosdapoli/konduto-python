@@ -3,7 +3,7 @@
 import unittest
 import os
 from konduto import Konduto
-from konduto.models import Order
+#from konduto.models import Order
 from random import randint
 # Load .env variables
 from dotenv import load_dotenv, find_dotenv
@@ -21,7 +21,7 @@ class KondutoTestCase(unittest.TestCase):
 
     def _build_simple_order(self, info={}):
         unique_id = randint(1, 100000)
-        order = Order()
+        order = None #Order()
         return order
 
     def test_expect_recommendation_approve(self):
