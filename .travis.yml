@@ -5,6 +5,13 @@ python:
 install:
   - pip install -r requirements.txt
 
+before_script:
+  - bash scripts/prepare_codeclimate_testcoverage.sh
+
 script:
-  - python tests.py
+  - coverage run --source 'konduto' --omit 'venv/*' tests.py
+  - coverage xml
+
+after_script:
+  - ./cc-test-reporter after-build --exit-code $TRAVIS_TEST_RESULT
 
