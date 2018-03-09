@@ -13,10 +13,12 @@ class Konduto(object):
     def __init__(self, api_public_key, api_private_key):
         logger.info("Initializing Konduto Python...")
         self.base_url = BASE_URL
+
         if len(api_private_key)==21:
         	self.api_private_key = api_private_key
         else:
         	raise Exception("Invalid key! API key length must be of 21")
+
         self.api_public_key = api_public_key
         api_public_key64 = b64encode(self.api_private_key.encode())
         self.headers = {
@@ -24,32 +26,13 @@ class Konduto(object):
               "Content-Type": "application/json",
               }
 
-    def analyze(self, order=None):
+    def analyze(self, order):
         url = self.base_url + "orders"
 
-        unique_id = randint(1, 100000)
-        data = {
-            "id": str(unique_id),
-            "visitor": "da39a3ee5e6b4b0d3255bfef95601890afd80709",
-            "total_amount": 100.01,  # Result approve in test env
-            "shipping_amount": 20.00,
-            "tax_amount": 3.45,
-            "currency": "BRL",
-            "installments": 2,
-            "ip": "189.68.156.100",
-            "customer": {
-                "id": "28372",
-                "name": "Júlia da Silva",
-                "tax_id": "12345678909",
-                "dob": "1970-12-25",
-                "phone1": "11-1234-5678",
-                "phone2": "21-2143-6578",
-                "email": "jsilva@exemplo.com.br",
-                "created_at": "2010-12-25",
-                "new": False,
-                "vip": False}
-            }
-        r = requests.post(url, headers=self.headers, json=data)
+        data = order.to_json()        
+
+        r = requests.post(url, headers=self.headers, data=data)
+        
         logger.debug(r.status_code)
         logger.debug(dir(r.request))
         logger.debug(r.request.body)
