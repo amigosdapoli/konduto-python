@@ -16,9 +16,9 @@ class Order(object):
     RECOMMENDATION_NONE = "none"
 
     __acceptable_keys_list = ["id", "visitor", "total_amount", "shipping_amount", "tax_amount",
-            "currency", "installments", "ip", "customer", ]#"payment", "billing",
-            #"shipping", "shopping_cart", "travel", "purchased_at", "first_message",
-            #"messages_exchanged", "seller", "analyze"
+            "currency", "installments", "ip", "customer", "payment", "billing",
+            "shipping", "shopping_cart", "travel", "purchased_at", "first_message",
+            "messages_exchanged", "seller", "analyze"]
 
     def __init__(self, **kwargs):
         [self.__setattr__(key, kwargs.get(key)) for key in self.__acceptable_keys_list]
