@@ -9,5 +9,5 @@ class Customer(object):
         [self.__setattr__(key, kwargs.get(key)) for key in self.__acceptable_keys_list]
 
     def to_json(self):
-        return self.__dict__
+        return json.loads(self.__dict__)
 

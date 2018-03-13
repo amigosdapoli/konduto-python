@@ -18,7 +18,7 @@ class Order(object):
     __acceptable_keys_list = ["id", "visitor", "total_amount", "shipping_amount", "tax_amount",
             "currency", "installments", "ip", "customer", "payment", "billing",
             "shipping", "shopping_cart", "travel", "purchased_at", "first_message",
-            "messages_exchanged", "seller", "analyze"]
+            "messages_exchanged", "seller", "analyze", "recommendation", "score"]
 
     def __init__(self, **kwargs):
         [self.__setattr__(key, kwargs.get(key)) for key in self.__acceptable_keys_list]
@@ -27,5 +27,5 @@ class Order(object):
         r = json.dumps(self, 
             default=lambda o: getattr(o, '__dict__', str(o)),
             ensure_ascii=False)
-        return r
+        return json.loads(r)
 
