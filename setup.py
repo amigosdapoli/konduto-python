@@ -9,7 +9,7 @@ def read(fname):
     return open(os.path.join(os.path.dirname(__file__), fname)).read()
 
 setup(
-    name = "konduto-python",
+    name = "konduto",
     version = "0.0.1",
     author = "Fernando Paiva",
     author_email = "fernandosjp@gmail.com",
