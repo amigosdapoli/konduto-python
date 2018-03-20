@@ -18,7 +18,7 @@ setup(
     keywords = "konduto",
     url = "https://github.com/amigosdapoli/konduto-python/",
     packages=['konduto'],
-    long_description=read('README'),
+    long_description=read('README.md'),
     classifiers=[
         "Topic :: Utilities",
     ],
