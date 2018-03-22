@@ -1,1 +1,1 @@
-from konduto.konduto import Konduto
+from .konduto import Konduto

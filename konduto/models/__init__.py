@@ -1,2 +1,2 @@
-from konduto.models.order import Order
-from konduto.models.customer import Customer
+from .order import Order
+from .customer import Customer
