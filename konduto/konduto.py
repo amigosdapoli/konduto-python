@@ -7,13 +7,14 @@ from konduto.models import Order, Customer
 
 logger = logging.getLogger(__name__)
 
-BASE_URL = "https://api.konduto.com/v1/"
-
+RECCOMENDATION_APPROVE = 'APPROVE'
+RECCOMENDATION_REVIEW = 'REVIEW'
+RECCOMENDATION_DECLINE = 'DECLINE'
 
 class Konduto(object):
     def __init__(self, api_public_key, api_private_key):
         logger.info("Initializing Konduto Python...")
-        self.base_url = BASE_URL
+        self.base_url = "https://api.konduto.com/v1/"
 
         if len(api_private_key)==21:
         	self.api_private_key = api_private_key
