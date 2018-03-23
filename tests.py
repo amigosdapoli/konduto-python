@@ -84,17 +84,17 @@ class KondutoTestCase(unittest.TestCase):
     def test_expect_recommendation_approve(self):
         order = self._build_simple_order()
         response = self.konduto.analyze(order)
-        self.assertEqual(response.recommendation, RECCOMENDATION_APPROVE)
+        self.assertEqual(response.recommendation, RECOMMENDATION_APPROVE)
 
     def test_expect_recommendation_review(self):
         order = self._build_simple_order({"total_amount": 100.31})
         response = self.konduto.analyze(order)
-        self.assertEqual(response.recommendation, RECCOMENDATION_REVIEW)
+        self.assertEqual(response.recommendation, RECOMMENDATION_REVIEW)
     
     def test_expect_recommendation_decline(self):
         order = self._build_simple_order({"total_amount": 100.61})
         response = self.konduto.analyze(order)
-        self.assertEqual(response.recommendation, RECCOMENDATION_DECLINE)
+        self.assertEqual(response.recommendation, RECOMMENDATION_DECLINE)
 
     def test_assert_all_fields(self):
         order = self._build_simple_order()
