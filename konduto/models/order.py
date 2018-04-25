@@ -27,5 +27,10 @@ class Order(object):
         r = json.dumps(self, 
             default=lambda o: getattr(o, '__dict__', str(o)),
             ensure_ascii=False)
-        return json.loads(r)
+
+        r_json = json.loads(r)
+        
+        # Payment needs to be inside array
+        r_json['payment'] = [r_json['payment']]
+        return r_json
 

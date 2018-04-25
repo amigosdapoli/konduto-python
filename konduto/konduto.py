@@ -3,13 +3,14 @@ import requests
 from base64 import b64encode
 import logging
 from random import randint
-from konduto.models import Order, Customer
+from konduto.models import Order, Customer, Payment
 
 logger = logging.getLogger(__name__)
+logger.setLevel(logging.DEBUG)
 
-RECCOMENDATION_APPROVE = 'APPROVE'
-RECCOMENDATION_REVIEW = 'REVIEW'
-RECCOMENDATION_DECLINE = 'DECLINE'
+ch = logging.StreamHandler()
+logger.addHandler(ch)
+
 
 class Konduto(object):
     def __init__(self, api_public_key, api_private_key):
@@ -30,13 +31,16 @@ class Konduto(object):
 
     def analyze(self, order):
         url = self.base_url + "orders"
-        data = order.to_json()        
-        r = requests.post(url, headers=self.headers, json=data)
+        data = order.to_json()    
 
+        logger.debug(data)    
+        
+        r = requests.post(url, headers=self.headers, json=data)
         if r.status_code != 200:
         	r.raise_for_status()
         
         data.update({"customer": Customer(**data['customer'])})
+        data.update({"payment": Payment(**data['payment'][0])})
         new_order = Order(**{**data, **r.json()['order']})
         return new_order
 

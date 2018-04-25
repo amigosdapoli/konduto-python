@@ -5,8 +5,10 @@ import os
 from konduto import Konduto
 from konduto.models import Order
 from konduto.models import Customer
+from konduto.models import Payment
 from konduto.utils import *
 from random import randint
+import logging
 # Load .env variables
 from dotenv import load_dotenv, find_dotenv
 load_dotenv(find_dotenv(), override=True)
@@ -36,9 +38,18 @@ class KondutoTestCase(unittest.TestCase):
                 "new": False,
                 "vip": False})
 
+    def _build_simple_payment(self, info=None):
+        return Payment(**{
+            "type": "credit", 
+            "bin": "490172",
+            "last4": "0012",
+            "expiration_date": "072015",
+            "status": "approved"})
+
     def _build_simple_order(self, info=None):
         self.unique_id = str(randint(1, 100000))
         customer = self._build_simple_customer()
+        payment = self._build_simple_payment()
         order_json = {
             "id": self.unique_id,
             "visitor": "da39a3ee5e6b4b0d3255bfef95601890afd80709",
@@ -48,7 +59,8 @@ class KondutoTestCase(unittest.TestCase):
             "currency": "BRL",
             "installments": 2,
             "ip": "189.68.156.100",
-            "customer": customer
+            "customer": customer,
+            "payment": payment,
             }
 
         if info is not None:
@@ -80,6 +92,12 @@ class KondutoTestCase(unittest.TestCase):
         self.assertFalse(customer.new)
         self.assertFalse(customer.vip)
         #self.assertOrderResponse(order, "APPROVE", 0.01)
+        payment = order.payment
+        self.assertEqual("credit", payment.type)
+        self.assertEqual("490172", payment.bin)
+        self.assertEqual("0012", payment.last4)
+        self.assertEqual("072015", payment.expiration_date)
+        self.assertEqual("approved", payment.status)
     
     def test_expect_recommendation_approve(self):
         order = self._build_simple_order()
