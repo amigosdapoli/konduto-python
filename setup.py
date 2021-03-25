@@ -10,7 +10,7 @@ def read(fname):
 
 setup(
     name = "konduto",
-    version = "0.0.1",
+    version = "0.0.2",
     author = "Fernando Paiva",
     author_email = "fernandosjp@gmail.com",
     description = ("Start python wrapper for Konduto API"),
@@ -22,5 +22,5 @@ setup(
     classifiers=[
         "Topic :: Utilities",
     ],
-    install_requires=('requests==2.11.1')
+    install_requires=('requests==2.18.0')
 )
